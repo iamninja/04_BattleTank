@@ -19,8 +19,25 @@ void ATankPlayerController::BeginPlay()
 	return;
 }
 
+void ATankPlayerController::Tick( float DeltaTime )
+{
+	Super::Tick( DeltaTime );
+	//UE_LOG(LogTemp, Warning, TEXT("PlayerController ticking..."));
+
+	AimTowardsCrosshair();
+
+	return;
+}
+
 ATank* ATankPlayerController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
+}
+
+void ATankPlayerController::AimTowardsCrosshair()
+{
+	if (!GetControlledTank()) { return; }
+
+	return;
 }
 
