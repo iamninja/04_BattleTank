@@ -2,6 +2,8 @@
 
 #include "TankPlayerController.h"
 
+#define OUT
+
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -38,6 +40,65 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
 
+	FVector HitLocation; // Out parameter
+	if (GetSightRayHitLocation(OUT HitLocation)) // is going to line trace
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *HitLocation.ToString());
+		// TODO tell controller tank to aim at this point
+	}
+	
 	return;
 }
 
+bool ATankPlayerController::GetSightRayHitLocation( FVector &HitLocation ) const
+{
+	/// Find crosshair position in pixel coordinates
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(OUT ViewportSizeX, OUT ViewportSizeY);
+	FVector2D ScreenLocation = FVector2D(
+		CrossHairXLocation * ViewportSizeX, 
+		CrossHairYLocation * ViewportSizeY
+	);
+
+	/// de-project the screen position of the crosshair to the world
+	FVector LookDirection;
+	if (GetLookLocation(ScreenLocation, OUT LookDirection))
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Looking Direction: %s"), *LookDirection.ToString());
+		/// line trace along that look direction and find what we hit (up to max range)
+		GetLookVectorHitLocation(LookDirection, OUT HitLocation);
+	}
+
+	
+	return true;
+}
+
+bool ATankPlayerController::GetLookLocation(FVector2D ScreenLocation, FVector &LookDirection) const
+{
+	FVector CameraWorldLocation; // Not needed
+	return DeprojectScreenPositionToWorld(
+		ScreenLocation.X,
+		ScreenLocation.Y,
+		OUT CameraWorldLocation,
+		OUT LookDirection
+	);
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation) const
+{
+	FHitResult HitResult;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
+	if (GetWorld()->LineTraceSingleByChannel(
+		OUT HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility)
+	)
+	{
+		HitLocation = HitResult.Location;
+		return true;
+	}
+	HitLocation = FVector(0);
+	return false; // Line trace didn't succeed
+}
