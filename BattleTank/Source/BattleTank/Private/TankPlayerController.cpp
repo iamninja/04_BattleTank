@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Engine/World.h"
 #include "TankPlayerController.h"
+#include "Engine/World.h"
 
 #define OUT
 
@@ -44,8 +44,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation; // Out parameter
 	if (GetSightRayHitLocation(OUT HitLocation)) // is going to line trace
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *HitLocation.ToString());
-		// TODO tell controller tank to aim at this point
+		///UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *HitLocation.ToString());
+		GetControlledTank()->AimAt(HitLocation);
 	}
 	
 	return;

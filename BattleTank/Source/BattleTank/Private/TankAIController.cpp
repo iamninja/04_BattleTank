@@ -3,6 +3,7 @@
 #pragma once
 
 #include "TankAIController.h"
+#include "Engine/World.h"
 
 void ATankAIController::BeginPlay()
 {
@@ -30,6 +31,24 @@ void ATankAIController::BeginPlay()
 	return;
 }
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (GetPlayerTank())
+	{
+		// TODO Move towards the player
+		
+		// Aim at the player
+		auto PlayerLocation = GetPlayerTank()->GetActorLocation();
+		GetControlledTank()->AimAt(PlayerLocation);
+
+		// Fire if ready
+	}
+	
+
+	return;
+}
+
 ATank* ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
@@ -40,4 +59,11 @@ ATank* ATankAIController::GetPlayerTank() const
 	auto PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 	if (!PlayerPawn) { return nullptr; }
 	return Cast<ATank>(PlayerPawn);
+}
+
+void ATankAIController::AimTowardsPlayer(FVector PlayerLocation)
+{
+	GetControlledTank()->AimAt(PlayerLocation);
+
+	return;
 }
