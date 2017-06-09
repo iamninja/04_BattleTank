@@ -3,4 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Kismet/GameplayStatics.h"
 
+// Mark for OUT variables
+#define OUT

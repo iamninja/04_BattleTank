@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine.h"
 #include "GameFramework/Pawn.h"
 #include "TankAimingComponent.h"
 #include "Tank.generated.h" // Must be the last include 
@@ -35,7 +36,7 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
-		float LaunchSpeed = 100000.f; /// TODO find sensible default
+		float LaunchSpeed = 100000.f; // TODO find sensible default
 	
 	
 };
