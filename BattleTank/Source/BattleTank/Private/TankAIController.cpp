@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "Tank.h"
 #include "TankAIController.h"
+#include "Tank.h"
 #include "Engine/World.h"
 
 void ATankAIController::BeginPlay()
