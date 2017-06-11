@@ -6,4 +6,4 @@
 #include "Kismet/GameplayStatics.h"
 
 // Mark for OUT variables
-#define OUT
+#define OUT 

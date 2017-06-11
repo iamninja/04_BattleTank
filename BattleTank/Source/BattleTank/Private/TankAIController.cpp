@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Tank.h"
 #include "TankAIController.h"
 #include "Engine/World.h"
 
