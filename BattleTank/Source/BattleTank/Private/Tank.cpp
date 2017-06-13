@@ -58,3 +58,8 @@ void ATank::AimAt(FVector HitLocation)
 	return;
 }
 
+void ATank::Fire() const
+{
+	auto Time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("%f: Firing..."), Time);
+}
