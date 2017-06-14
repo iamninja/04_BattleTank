@@ -26,30 +26,33 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
+		void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
+		void SetTurretReference(UTankTurret* TurretToSet);
 
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Firing)
-	void Fire() const;
+	void Fire();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UTankAimingComponent* TankAimingComponent = nullptr;	
+	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 4000; // TODO Does it really need .f?
+		float LaunchSpeed = 4000;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
-	//UClass *ProjectileBlueprint; // Alternative with subclass..
-	TSubclassOf<AProjectile> ProjectileBluprint;
+		//UClass *ProjectileBlueprint; // Alternative with subclass..
+		TSubclassOf<AProjectile> ProjectileBluprint;
 
 	// Local barrel reference for spawning projectile
 	UTankBarrel *Barrel = nullptr;
+
+	float ReloadTimeInSeconds = 3; // TODO magic number
+	double LastFireTime = 0;
 };
