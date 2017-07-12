@@ -22,7 +22,7 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	return;
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel)) { UE_LOG(LogTemp, Warning, TEXT("Cant find barrel...")); return; }
 	if (!ensure(Turret)) { UE_LOG(LogTemp, Warning, TEXT("Cant find turret...")); return; }
