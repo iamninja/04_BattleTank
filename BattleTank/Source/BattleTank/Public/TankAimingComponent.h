@@ -49,6 +49,8 @@ private:
 
 	void MoveBarrelTowards(FVector AimDirection);
 
+	bool IsBarrelMoving();
+
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 
@@ -63,7 +65,7 @@ private:
 	//UClass *ProjectileBlueprint; // Alternative with subclass..
 	TSubclassOf<AProjectile> ProjectileBluprint;
 
-
+	FVector AimDirection;
 	double LastFireTime = 0;
 	
 };
