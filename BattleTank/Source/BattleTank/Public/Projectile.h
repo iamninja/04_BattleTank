@@ -30,6 +30,11 @@ public:
 private:
 	UProjectileMovementComponent *ProjectileMovement = nullptr;
 
+	void OnTimerExpire();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float DestroyDelay = 10.f;
+
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent *CollisionMesh = nullptr; // Alternative with subclass..
 	//TSubclassOf<UStaticMeshComponent> CollisionMesh = nullptr;
